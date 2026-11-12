@@ -19,6 +19,8 @@
   --invert-line: rgba(255, 255, 255, 0.12);
   --shadow: 0 30px 60px -32px rgba(14, 26, 38, 0.35);
   --phone: #0e1a26;
+  --photo-bg: #0b0c0f;
+  --on-photo: #ffffff;
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -319,6 +321,42 @@ body::before {
 
 .btn--ghost:hover {
   border-color: var(--ink);
+}
+
+/* fotka v úvodu */
+
+.hero-photo {
+  position: relative;
+  margin: 0;
+  justify-self: center;
+  width: min(100%, 440px);
+}
+
+.hero-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 30%;
+  border-radius: 28px;
+  background: var(--photo-bg);
+  box-shadow: var(--shadow);
+}
+
+.hero-photo__tag {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(10, 17, 24, 0.55);
+  color: var(--on-photo);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
 }
 
 /* manometr */
@@ -1238,6 +1276,20 @@ body::before {
 
   .dial {
     width: min(100%, 320px);
+  }
+
+  .hero-photo {
+    order: -1;
+    justify-self: start;
+    width: min(64%, 260px);
+  }
+
+  .hero-photo img {
+    border-radius: 22px;
+  }
+
+  .hero-photo__tag {
+    display: none;
   }
 
   .stats {

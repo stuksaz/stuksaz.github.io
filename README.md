@@ -33,6 +33,5 @@ Vlastní doménu (třeba `stuksa.cz`) jde nastavit tamtéž v **Custom domain**.
 
 ## Co ještě doplnit
 
-- **Fotka:** v `index.html` nahradit `<div class="portrait">` obrázkem (návod je v komentáři přímo u něj).
 - **Osobní e-mail a telefon:** teď jsou v kontaktu firemní údaje.
 - **Reference:** krátká věta od spokojeného klienta nebo přítele.
