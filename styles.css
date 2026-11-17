@@ -3063,3 +3063,16 @@ body::before {
   display: inline-block;
   margin-right: 20px;
 }
+
+/* slovní hodnota ve statistice sedí na stejné lince jako čísla */
+.cs-stats dd.is-word {
+  display: flex;
+  align-items: flex-end;
+  min-height: calc(clamp(1.6rem, 3vw, 2.2rem) * 1.65);
+}
+
+@media (max-width: 600px) {
+  .pj-hero .cs-stats dd.is-word {
+    min-height: calc(1.45rem * 1.65);
+  }
+}
