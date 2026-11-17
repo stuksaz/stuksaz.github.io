@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Middleware Ventilek — vlastní systém pro Kompresory-Vzduchotechnika.cz</title>
+  <meta name="description" content="Případová studie: vlastní middleware, který propojuje Shoptet, ABRA Flexi a dvacet dalších služeb. Objednávky, faktury, AI překlady, obsah, nabídky, sklad a automatizace.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f3f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0a1118" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="cs_CZ">
+  <meta property="og:title" content="Middleware Ventilek — vlastní systém pro e-shop">
+  <meta property="og:description" content="Jak jsem propojil Shoptet, ABRA Flexi a dvacet dalších služeb do jednoho systému, který za nás dělá ruční práci.">
+  <meta property="og:image" content="https://stuksaz.github.io/assets/zdenek-stuksa.jpg">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230e1a26'/%3E%3Cpath d='M16 16 L24 10' stroke='%23e0492a' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ffffff'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
+
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="./" aria-label="Zdeněk Štuksa – úvod">
+        <span class="brand__mark" aria-hidden="true">ZŠ</span>
+        <span class="brand__name">Zdeněk Štuksa</span>
+      </a>
+      <nav class="nav" aria-label="Navigace případové studie">
+        <a href="#co-umi">Co umí</a>
+        <a href="#jak-je-postaveny">Jak je postavený</a>
+        <a href="#vyvoj">Vývoj</a>
+        <a class="nav__cta" href="./#kontakt">Kontakt</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="obsah">
+    <!-- ÚVOD -->
+    <section class="cs-hero">
+      <div class="wrap">
+        <a class="cs-back" href="./#projekty">← Zpět na projekty</a>
+        <p class="eyebrow">Případová studie · vlastní software</p>
+        <h1>Middleware Ventilek</h1>
+        <p class="cs-hero__lead">
+          Systém, který jsem postavil pro <strong>Kompresory-Vzduchotechnika.cz</strong>.
+          Stojí mezi e-shopem na Shoptetu, účetnictvím ABRA Flexi a dvaceti dalšími
+          službami a dělá za nás práci, kterou by jinak dělali lidé ručně: od objednávek
+          a faktur přes překlady do čtyř jazyků až po nabídky, obsah a příjem zboží.
+        </p>
+        <dl class="cs-stats">
+          <div><dt>změn nasazených od jara 2026</dt><dd>1 000+</dd></div>
+          <div><dt>propojených systémů a služeb</dt><dd>20+</dd></div>
+          <div><dt>textů přeložených pomocí AI</dt><dd>500 000+</dd></div>
+          <div><dt>sad automatických testů</dt><dd>190+</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- PROČ -->
+    <section class="section">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="eyebrow">Proč vznikl</p>
+          <h2>Tři problémy, jedno řešení</h2>
+        </header>
+        <ul class="cards cs-problems">
+          <li class="card">
+            <h3>Datový můstek padal</h3>
+            <p>Objednávky mezi Shoptetem a účetnictvím přenášel placený nástroj, který byl nestabilní. Když vypadl, objednávky se musely dohánět ručně.</p>
+          </li>
+          <li class="card">
+            <h3>Překlady nestačily</h3>
+            <p>Placený překladový nástroj nestačil na objem pěti jazykových verzí e-shopu a stál přes 6 000 Kč měsíčně.</p>
+          </li>
+          <li class="card">
+            <h3>Moc ruční práce</h3>
+            <p>Nabídky, ceny od dodavatelů, recenze, hlídání termínů, kontrola textů a odkazů. Všechno zabíralo čas lidem, kteří měli dělat něco jiného.</p>
+          </li>
+        </ul>
+        <p class="cs-answer">
+          Místo dalšího placeného nástroje jsem postavil <strong>vlastní systém</strong>, který
+          nahradil oba nespolehlivé nástroje a postupně převzal i ruční práci. Patří nám,
+          takže ho můžu upravit přesně podle toho, jak firma funguje.
+        </p>
+      </div>
+    </section>
+
+    <!-- SCHÉMA -->
+    <section class="section section--tight">
+      <div class="wrap">
+        <article class="feature">
+          <div>
+            <span class="tag">Jak to do sebe zapadá</span>
+            <h3>Jeden střed pro celou firmu</h3>
+            <p class="feature__lead">
+              Middleware přijímá události z e-shopu (nová objednávka, platba, změna, storno)
+              a rozesílá je tam, kam patří. Naopak z účetnictví, skladu a od dodavatelů vrací
+              do e-shopu doklady, ceny, termíny a stav zboží. Nad tím běží AI, analytika
+              a automatizace.
+            </p>
+            <p class="feature__lead">
+              V administraci je maskot Ventilek: všechno, co se v systému děje samo,
+              dělá „Ventilek“.
+            </p>
+          </div>
+          <div class="flow" role="img" aria-label="Schéma: e-shop na Shoptetu, platby, recenze, reklama a analytika posílají data do middlewaru, který je propojuje s účetnictvím ABRA Flexi, dopravci, e-maily, podporou a dodavateli. Nad tím běží AI překlady, obsah, nabídky, analytika a automatizace.">
+            <div class="flow__side">
+              <p class="flow__label">E-shop</p>
+              <ul class="flow__col">
+                <li>Shoptet<small>objednávky, katalog</small></li>
+                <li>Platby<small>Shoptet Pay</small></li>
+                <li>Recenze<small>Heureka, Zboží.cz</small></li>
+                <li>Reklama<small>Ads, Sklik, Meta</small></li>
+                <li>Analytika<small>GA4, Search Console</small></li>
+              </ul>
+            </div>
+            <div class="flow__hub"><span>Middleware<small>Ventilek</small></span></div>
+            <div class="flow__side">
+              <p class="flow__label">Firma</p>
+              <ul class="flow__col">
+                <li>ABRA Flexi<small>účetnictví a sklad</small></li>
+                <li>Zásilkovna<small>doprava</small></li>
+                <li>Ecomail, e-maily<small>zákazníci</small></li>
+                <li>SupportBox, Retino<small>podpora a reklamace</small></li>
+                <li>Dodavatelé<small>feedy a e-maily</small></li>
+              </ul>
+            </div>
+            <div class="flow__ai">
+              <span><b>AI</b> překlady</span>
+              <span><b>AI</b> obsah</span>
+              <span><b>AI</b> nabídky</span>
+              <span>analytika</span>
+              <span>automatizace</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- CO UMÍ -->
+    <section id="co-umi" class="section section--alt">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="eyebrow">Co umí a jak nám pomáhá</p>
+          <h2>Sedm oblastí, které běží samy</h2>
+        </header>
+
+        <div class="cs-group">
+          <h3 class="group-title">Objednávky a doklady</h3>
+          <ul class="cs-modules cs-modules--5">
+            <li class="cs-module">
+              <h4>Objednávky rovnou do účetnictví</h4>
+              <p>Každá objednávka ze Shoptetu se sama založí v ABRA Flexi i se zákazníkem, dopravou, platbou a výdejním místem Zásilkovny. Změny, platby a storna se propisují samy.</p>
+              <p class="cs-benefit">Nikdo objednávky nepřepisuje a žádná se neztratí.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Faktury v účtu zákazníka</h4>
+              <p>Faktury, zálohy a doklady o platbě z ABRY se samy ukládají do Shoptetu k objednávce.</p>
+              <p class="cs-benefit">Zákazník si doklad najde sám a nemusí nám kvůli němu psát.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Celá historie objednávky</h4>
+              <p>Na jednom místě je vidět, co se s objednávkou kdy stalo, kdo to udělal (Ventilek, člověk, nebo zákazník) a jestli o tom zákazník dostal zprávu. Včetně vrácených plateb.</p>
+              <p class="cs-benefit">Na dotaz zákazníka odpovíme hned, bez hledání ve třech systémech.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Hlídání termínů doručení</h4>
+              <p>Termín v účetnictví odpovídá tomu, co zákazník viděl na webu. Když se dodání posune, systém to pozná a zákazník se to dozví.</p>
+              <p class="cs-benefit">Zákazníka nic nepříjemně nepřekvapí.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Příjem zboží</h4>
+              <p>Přehled balíků od dodavatelů: co je na cestě, co se zpožďuje, které objednávky zákazníků balík dokončí a co zabalit podle dopravce.</p>
+              <p class="cs-benefit">Sklad ví dopředu, co přijde a co s tím udělat.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cs-group">
+          <h3 class="group-title">Automatizace</h3>
+          <ul class="cs-modules">
+            <li class="cs-module">
+              <h4>Pravidla bez programování</h4>
+              <p>„Když se stane tohle, udělej tamto“: štítky v ABŘE, stav objednávky v Shoptetu, e-mail, upozornění. Každé spuštění se zapíše do historie.</p>
+              <p class="cs-benefit">Nový postup nastavím za pár minut a vidím, co se kdy stalo.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Zaplaceno znamená zaplaceno</h4>
+              <p>Po zaplacení systém přepne stav objednávky, takže zákazníkovi přijde poděkování e-mailem a SMS. Nikdy dvakrát.</p>
+              <p class="cs-benefit">Zákazník má jistotu, že platba dorazila.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Ceníky a balení</h4>
+              <p>Když se v ABŘE změní, po kolika kusech se zboží prodává, do 15 minut to platí ve všech cenících e-shopu.</p>
+              <p class="cs-benefit">Nikdo neobjedná množství, které nejde prodat.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cs-group">
+          <h3 class="group-title">AI překlady do čtyř jazyků</h3>
+          <ul class="cs-modules cs-modules--2">
+            <li class="cs-module cs-module--wide">
+              <h4>E-shop v němčině, angličtině, polštině a slovenštině</h4>
+              <p>AI překládá produkty, kategorie, články i filtry a zapisuje je rovnou do Shoptetu. Hlídá ji slovník odborných pojmů, paměť už přeložených vět a devět druhů automatických kontrol: čísla, rozměry, normy, odkazy i formátování. Překlad, který má zůstat stejný jako v češtině, může člověk jedním klepnutím potvrdit. Velké dávky se posílají za poloviční cenu a celé to má měsíční strop.</p>
+              <p class="cs-benefit">Přes 500 000 přeložených textů. Náklady na překlady klesly z tisíců korun měsíčně na desítky a nové zboží je hned v pěti jazycích.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Odkazy ve správném jazyce</h4>
+              <p>Odkaz v polském textu vede na polskou stránku, ne na českou. Systém ověří, že cílová stránka opravdu existuje.</p>
+              <p class="cs-benefit">Opraveno přes 88 000 odkazů v 10 000 textech.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Hlídač překlepů a úklid textů</h4>
+              <p>Každý týden zkontroluje pravopis. Opakovanou chybu opraví naráz v celém e-shopu a každou opravu jde vrátit.</p>
+              <p class="cs-benefit">Texty jsou čisté ve všech jazycích.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cs-group">
+          <h3 class="group-title">Obsah a SEO</h3>
+          <ul class="cs-modules cs-modules--2">
+            <li class="cs-module">
+              <h4>Témata podle dat</h4>
+              <p>Z Google Search Console, Collabimu a Marketing Mineru vybere stránky a fráze s největší šancí přivést návštěvy. Ke každému tématu ukáže očekávaný přínos, obtížnost a pozice na Googlu i Seznamu.</p>
+              <p class="cs-benefit">Píše se tam, kde to přinese zákazníky.</p>
+            </li>
+            <li class="cs-module">
+              <h4>AI píše, člověk schvaluje</h4>
+              <p>Po schválení tématu napíše AI návrh sama. U stávající stránky dělá jen cílené úpravy, ke každé uvede důvod a přínos a ukáže je vedle sebe s původním textem. Pojistka nedovolí, aby stránka přišla o odkazy nebo obsah.</p>
+              <p class="cs-benefit">Kvalitní texty bez rizika, že se web zhorší.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Měření výsledku</h4>
+              <p>U každé úpravy porovná návštěvnost 28 dní před a po. Hlídá stránky, které si konkurují o stejnou frázi, a měří návštěvy z AI asistentů jako ChatGPT nebo Perplexity.</p>
+              <p class="cs-benefit">Víme, co fungovalo a co ne.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Hlídač odkazů</h4>
+              <p>Pravidelně prochází přes 22 000 adres na webu a hlásí ty, které vedou do prázdna.</p>
+              <p class="cs-benefit">Zákazník ani Google nenarazí na nefunkční odkaz.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cs-group">
+          <h3 class="group-title">Prodej a zákazníci</h3>
+          <ul class="cs-modules cs-modules--2">
+            <li class="cs-module">
+              <h4>Nabídka z poptávky</h4>
+              <p>Do systému se vloží e-mail s poptávkou. Pozná jazyk, najde naše produkty mezi více než 20 000 položkami, dohledá firmu v ARES, založí nabídku v ABŘE a připraví odpověď v jazyce zákazníka. Poradí si i s poptávkou s výkresem. Odesílá vždy člověk.</p>
+              <p class="cs-benefit">Nabídka za pár minut místo hodiny hledání.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Recenze na jednom místě</h4>
+              <p>Žádosti o hodnocení po nákupu, recenze z Heureky a Zboží.cz pohromadě a odpovědi zpátky na Zboží.cz.</p>
+              <p class="cs-benefit">Víc recenzí a žádné přihlašování do dalších systémů.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Zákaznická aplikace</h4>
+              <p>Aplikace do mobilu: objednávky se sledováním zásilky, doklady v PDF, reklamace, oblíbené zboží a přehled pro firmy.</p>
+              <p class="cs-benefit">Zákazník má všechno po ruce i bez volání.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Kalkulačky na webu</h4>
+              <p>Data pro kalkulačku kompresorů se sestavují samy z katalogu a přibývají kalkulačky filtrace a sušiček. Systém hlídá, jestli jsou data úplná, platná a aktuální.</p>
+              <p class="cs-benefit">Zákazník si vybere správný stroj sám.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cs-group">
+          <h3 class="group-title">Nákup a ceny</h3>
+          <ul class="cs-modules">
+            <li class="cs-module">
+              <h4>Párování s katalogem dodavatele</h4>
+              <p>AI porovnala stovky šroubení podle výkresů a parametrů a zapsala 468 vazeb mezi našimi kódy a katalogem dodavatele rovnou do ABRY.</p>
+              <p class="cs-benefit">Objednávání u dodavatele bez dohledávání kódů.</p>
+            </li>
+            <li class="cs-module">
+              <h4>Nákupní ceny s pojistkou</h4>
+              <p>Ceny od dodavatelů se zapisují samy. Podezřelý skok ceny systém zastaví a ukáže člověku. Umí taky najít a opravit karty s chybně přepočtenou nákupní cenou.</p>
+              <p class="cs-benefit">Správné marže a žádné nečekané ztráty.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="cs-group">
+          <h3 class="group-title">Marketing a data</h3>
+          <ul class="cs-modules">
+            <li class="cs-module cs-module--wide">
+              <h4>Reklama a návštěvnost na jedné obrazovce</h4>
+              <p>Google Ads, Sklik, Meta, GA4 a Search Console vedle sebe. Návratnost a ziskovost reklamy podle produktů a kategorií, náklady, kanály a srovnání s konkurencí.</p>
+              <p class="cs-benefit">Rozhodujeme podle čísel, ne podle pocitu.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- JAK JE POSTAVENÝ -->
+    <section id="jak-je-postaveny" class="section">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="eyebrow">Jak je postavený</p>
+          <h2>Pravidla, díky kterým se na něj dá spolehnout</h2>
+        </header>
+        <ul class="cards cards--skills">
+          <li class="card">
+            <h3>Nejdřív nanečisto</h3>
+            <p>Každý zápis do účetnictví nebo e-shopu jde nejdřív vyzkoušet bez dopadu. Až když výsledek sedí, zapíše se doopravdy.</p>
+          </li>
+          <li class="card">
+            <h3>Záloha před zápisem</h3>
+            <p>Co se přepisuje, to se nejdřív zálohuje. Ceny, texty i opravy jdou vrátit.</p>
+          </li>
+          <li class="card">
+            <h3>Tichý úspěch je chyba</h3>
+            <p>Po každém zápisu si systém hodnotu přečte znovu. Akce, která nic neudělala, musí selhat nahlas, ne svítit zeleně.</p>
+          </li>
+          <li class="card">
+            <h3>AI navrhuje, člověk rozhoduje</h3>
+            <p>Nabídky, odpovědi zákazníkům a velké úpravy textů vždy schvaluje člověk. AI dělá práci, ne rozhodnutí.</p>
+          </li>
+          <li class="card">
+            <h3>Nasazuje se v klidu</h3>
+            <p>Nové verze se nasazují samy, ale jen když zrovna neběží žádná dlouhá úloha. Nic se nepřeruší uprostřed práce.</p>
+          </li>
+          <li class="card">
+            <h3>Testy u každé změny</h3>
+            <p>Přes 190 sad automatických testů hlídá, aby nová funkce nerozbila starou.</p>
+          </li>
+        </ul>
+        <p class="brands">
+          <span class="brands__label">Technologie</span>
+          <span class="brands__list">Node.js · TypeScript · Fastify · PostgreSQL · Redis · Docker · vlastní server</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- VÝVOJ -->
+    <section id="vyvoj" class="section section--alt">
+      <div class="wrap story">
+        <header class="section__head">
+          <p class="eyebrow">Vývoj</p>
+          <h2>Od záchranné mise k celé firmě</h2>
+        </header>
+        <ol class="timeline">
+          <li>
+            <span class="timeline__year">Jaro</span>
+            <div>
+              <h3>Záchranná mise</h3>
+              <p>Objednávky ze Shoptetu do ABRA Flexi, výdejní místa Zásilkovny a první automatizace bez programování. Nestabilní datový můstek šel pryč.</p>
+            </div>
+          </li>
+          <li>
+            <span class="timeline__year">Červen</span>
+            <div>
+              <h3>Doklady a reklamace</h3>
+              <p>Faktury, zálohy a doklady o platbě v účtu zákazníka. Napojení na systém pro reklamace.</p>
+            </div>
+          </li>
+          <li>
+            <span class="timeline__year">Září</span>
+            <div>
+              <h3>AI překlady</h3>
+              <p>Vlastní překladový modul nahradil placený nástroj. Jen za září přes 42 000 přeložených textů.</p>
+            </div>
+          </li>
+          <li>
+            <span class="timeline__year">Říjen</span>
+            <div>
+              <h3>Nabídky, ceny a zákaznická aplikace</h3>
+              <p>Nabídky z poptávek, nákupní ceny od dodavatelů, hlídač odkazů, automat překladů a aplikace pro zákazníky.</p>
+            </div>
+          </li>
+          <li class="timeline__now">
+            <span class="timeline__year">Listopad</span>
+            <div>
+              <h3>Obsah, sklad a přehled objednávek</h3>
+              <p>AI obsah a SEO, kalkulačky na webu, celá historie objednávek, hlídání termínů a příjem zboží od dodavatelů.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section class="section">
+      <div class="wrap">
+        <div class="contact">
+          <div class="contact__intro">
+            <p class="eyebrow eyebrow--invert">Pro váš e-shop</p>
+            <h2>Chcete, aby vaše firma taky běžela víc sama?</h2>
+            <p>Middleware stavím tak, aby jednou mohl sloužit i dalším e-shopům. Napište mi, co vás nejvíc zdržuje, a podívám se, co by šlo propojit nebo zautomatizovat.</p>
+            <div class="contact__actions">
+              <a class="btn btn--primary" href="./#kontakt">Napsat mi</a>
+              <a class="btn btn--ghost" href="./#projekty">Další projekty</a>
+            </div>
+          </div>
+          <ul class="contact__list">
+            <li>
+              <span class="contact__label">Stav</span>
+              <span>Běží v ostrém provozu</span>
+            </li>
+            <li>
+              <span class="contact__label">Pro</span>
+              <span>Kompresory-Vzduchotechnika.cz</span>
+            </li>
+            <li>
+              <span class="contact__label">Napojení</span>
+              <span>Shoptet Premium a ABRA Flexi</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__inner">
+      <span>© <span data-year>2026</span> Zdeněk Štuksa</span>
+      <span><a href="./">Zpět na hlavní stránku</a></span>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
