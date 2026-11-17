@@ -162,7 +162,7 @@ VIZ_KUSKA = stage(
     "kuska-mobil.webp",
     "Návrh webu Martina Kušky v mobilu",
     h=768,
-)
+) + '<p class="pj-note">Snímky z rozpracované verze. Grafika a styl se ještě mění.</p>'
 
 VIZ_DUNDEE = f"""<div class="mock">
             <p class="mock__bar"><span class="vlog__dot" aria-hidden="true"></span>Administrace · poptávky</p>
@@ -436,7 +436,7 @@ PROJEKTY = [
         slug="martin-kuska.html",
         title="Martin Kuška, spisovatel",
         desc="Osobní web pro autora knih o Křivoklátsku, copywritera, průvodce a lektora: čtyři dveře pro čtyři profese, SEO se strukturovanými daty a Lighthouse 100.",
-        eyebrow="Web pro přítele · návrh čeká na spuštění",
+        eyebrow="Web pro přítele · rozpracováno",
         h1="Martin Kuška",
         lead="Osobní web pro autora knih o Křivoklátsku, copywritera a obsahového stratéga pro firmy, průvodce a lektora kurzů jízdy na kole. Čtyři profese, jeden člověk a web, který každého návštěvníka pošle rovnou tam, kam patří.",
         meta=["Astro", "SEO", "llms.txt", "GA4 se souhlasem"],
@@ -468,10 +468,10 @@ PROJEKTY = [
             ("shot", "kuska-spisovatel.webp", "Stránka spisovatele s novou knihou.", "Martin Kuška · spisovatel", 768),
             ("phone", "kuska-mobil.webp", "Úvod v mobilu."),
         ],
-        galerie_note="Snímky z návrhu webu. Termíny, ceny a některé fotky jsou zatím jen ukázka.",
+        galerie_note="Snímky z rozpracované verze webu. Grafika a styl se ještě mění, termíny, ceny a některé fotky jsou zatím jen ukázka.",
         tech="Astro · strukturovaná data JSON-LD · llms.txt · Google Analytics 4 s režimem souhlasu v2",
         cta=CTA_WEB,
-        fakta=[("Stav", "Návrh, čeká na spuštění"), ("Pro", "Martin Kuška, spisovatel"), ("Postaveno na", "Astro")],
+        fakta=[("Stav", "Rozpracováno"), ("Pro", "Martin Kuška, spisovatel"), ("Postaveno na", "Astro")],
     ),
     dict(
         slug="dundee-agency.html",
