@@ -177,4 +177,83 @@
       while (log.children.length > 5) log.removeChild(log.lastChild);
     }, 2600);
   }
+  // ---------- ilustrace na stránkách projektů ----------
+
+  // Košík: množství jen po celých baleních
+  document.querySelectorAll("[data-stepper]").forEach(function (el) {
+    if (reduceMotion) return;
+    var out = el.querySelector("output");
+    var step = Number(el.getAttribute("data-step")) || 1;
+    var max = Number(el.getAttribute("data-max")) || step * 5;
+    var unit = el.getAttribute("data-unit") || "";
+    var value = step;
+    setInterval(function () {
+      if (document.hidden) return;
+      value = value >= max ? step : value + step;
+      out.textContent = value + unit;
+      out.classList.remove("is-new");
+      void out.offsetWidth;
+      out.classList.add("is-new");
+    }, 2200);
+  });
+
+  // Odpočet akční nabídky (ukázkový, po doběhnutí začne znovu)
+  document.querySelectorAll("[data-countdown]").forEach(function (el) {
+    var hours = Number(el.getAttribute("data-hours")) || 48;
+    var end = Date.now() + hours * 3600 * 1000;
+    var parts = {
+      d: el.querySelector("[data-d]"),
+      h: el.querySelector("[data-h]"),
+      m: el.querySelector("[data-m]"),
+      s: el.querySelector("[data-s]"),
+    };
+    function pad2(n) { return n < 10 ? "0" + n : String(n); }
+    function tick() {
+      var left = Math.max(0, end - Date.now());
+      if (left === 0) end = Date.now() + hours * 3600 * 1000;
+      var sec = Math.floor(left / 1000);
+      parts.d.textContent = String(Math.floor(sec / 86400));
+      parts.h.textContent = pad2(Math.floor((sec % 86400) / 3600));
+      parts.m.textContent = pad2(Math.floor((sec % 3600) / 60));
+      parts.s.textContent = pad2(sec % 60);
+    }
+    tick();
+    if (!reduceMotion) setInterval(tick, 1000);
+  });
+
+  // Kampaň se sama pozastaví, když nabídka skončí
+  document.querySelectorAll("[data-campaign]").forEach(function (el) {
+    if (reduceMotion) return;
+    var text = el.querySelector("[data-campaign-text]");
+    var on = el.getAttribute("data-on");
+    var off = el.getAttribute("data-off");
+    setInterval(function () {
+      if (document.hidden) return;
+      var isOff = el.classList.toggle("is-off");
+      text.textContent = isOff ? off : on;
+    }, 3600);
+  });
+
+  // Počítadlo, které se rozběhne, když je vidět
+  var counters = document.querySelectorAll("[data-count]");
+  if (counters.length && !reduceMotion && "IntersectionObserver" in window) {
+    var fmt = function (n) { return Math.round(n).toLocaleString("cs-CZ"); };
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        io.unobserve(entry.target);
+        var el = entry.target;
+        var target = Number(el.getAttribute("data-count"));
+        var start = performance.now();
+        var dur = 1600;
+        (function frame(now) {
+          var t = Math.min(1, (now - start) / dur);
+          var eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = fmt(target * eased);
+          if (t < 1) requestAnimationFrame(frame);
+        })(start);
+      });
+    }, { threshold: 0.4 });
+    counters.forEach(function (el) { io.observe(el); });
+  }
 })();

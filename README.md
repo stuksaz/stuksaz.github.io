@@ -1,17 +1,33 @@
 # Zdeněk Štuksa — osobní web
 
-Jednostránkový osobní web: kdo jsem, co umím, co jsem postavil a jak mě kontaktovat.
-Čisté HTML, CSS a pár řádků JavaScriptu, bez buildu a bez závislostí.
+Osobní web: kdo jsem, co umím, co jsem postavil a jak mě kontaktovat.
+Hlavní stránka a ke každému projektu vlastní stránka.
+Čisté HTML, CSS a pár řádků JavaScriptu, bez závislostí.
 
 Adresa: **https://stuksaz.github.io**
 
 ## Soubory
 
-| Soubor       | Co v něm je                                                                       |
-| ------------ | --------------------------------------------------------------------------------- |
-| `index.html` | Obsah: úvod s manometrem, O mně, Co umím, Projekty, Jak pracuju, Příběh, Kontakt  |
-| `styles.css` | Vzhled. Barvy jsou proměnné nahoře v `:root`, tmavý režim hned pod                |
-| `script.js`  | Doplní aktuální rok do patičky                                                    |
+| Soubor | Co v něm je |
+| --- | --- |
+| `index.html` | Hlavní stránka: úvod, O mně, Co umím, Projekty, Jak pracuju, Příběh, Kontakt |
+| `middleware.html` | Případová studie middlewaru Ventilek (psaná ručně) |
+| `kompresory-vzduchotechnika.html`, `kvit.html` a další | Stránky projektů, **generované** z `_zdroj/projekty.py` |
+| `styles.css` | Vzhled. Barvy jsou proměnné nahoře v `:root`, tmavý režim hned pod |
+| `script.js` | Animace (proudění vzduchu, živý deník, odpočty, počítadla) a aktuální rok |
+| `assets/` | Fotka, snímky webů a aplikací (WebP) |
+
+## Úprava stránek projektů
+
+Texty projektů jsou v `_zdroj/projekty.py` (seznam `PROJEKTY`). Po úpravě:
+
+```bash
+python3 _zdroj/projekty.py
+```
+
+Skript přepíše všechny stránky projektů a obnoví blok „Další projekty“
+v `middleware.html`. Složku `_zdroj` GitHub Pages nezveřejňuje.
+Stránky projektů neupravuj ručně, při dalším spuštění by se změny ztratily.
 
 ## Náhled na počítači
 
