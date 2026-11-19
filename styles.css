@@ -3,6 +3,45 @@
    Barvy jsou tokeny v :root, tmavý režim je níže.
    ------------------------------------------------------------ */
 
+/* Písma jsou uložená přímo na webu (dřív Google Fonts): rychlejší první zobrazení
+   a návštěvník nic neposílá Googlu před souhlasem. Licence SIL OFL je u souborů. */
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("assets/fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("assets/fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("assets/fonts/space-grotesk-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url("assets/fonts/space-grotesk-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   --bg: #f3f5f7;
   --surface: #ffffff;
@@ -11,7 +50,7 @@
   --muted: #536171;
   --line: #d3dae1;
   --grid: rgba(14, 26, 38, 0.05);
-  --accent: #d9431f;
+  --accent: #c2381a;
   --accent-ink: #ffffff;
   --invert-bg: #0e1a26;
   --invert-ink: #eef2f5;
@@ -28,7 +67,7 @@
   --flow-a: #ff6b45;
   --flow-b: #5fa8d3;
   --live: #3ad29f;
-  --spot: rgba(217, 67, 31, 0.08);
+  --spot: rgba(194, 56, 26, 0.08);
   --spot-dark: rgba(255, 107, 69, 0.14);
 
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
@@ -76,6 +115,17 @@
   --shadow: 0 30px 60px -32px rgba(0, 0, 0, 0.8);
   --phone: #2a3a49;
   color-scheme: dark;
+}
+
+/* V tmavých pruzích (úvod, kontakt, karty projektů) světlejší oranžová,
+   aby byla čitelná i ve světlém vzhledu. */
+.hero--dark,
+.cs-hero,
+.contact,
+.feature,
+.portrait {
+  --accent: #ff6b45;
+  --accent-ink: #0a1118;
 }
 
 /* ---------- základ ---------- */
@@ -233,6 +283,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: 4px;
+  margin-left: auto;
 }
 
 .nav a {
@@ -248,10 +299,21 @@ body::before {
   color: var(--ink);
 }
 
-.nav .nav__cta {
+.nav__cta {
+  flex: none;
+  margin-left: -12px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
   color: var(--ink);
   border: 1px solid var(--line);
   background: var(--surface);
+}
+
+.nav__cta:hover {
+  border-color: var(--ink);
 }
 
 /* ---------- úvod ---------- */
@@ -1422,6 +1484,7 @@ body::before {
   grid-column: span 2;
 }
 
+.cs-module h3,
 .cs-module h4 {
   margin: 0 0 8px;
   font-family: var(--font-display);
@@ -1966,8 +2029,49 @@ body::before {
 }
 
 @media (max-width: 600px) {
-  .nav a:not(.nav__cta) {
+  /* Na telefonu jde menu pod jméno jako řádek, který se dá posunout prstem. */
+  html {
+    scroll-padding-top: 116px;
+  }
+
+  .site-header__inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 10px;
+    row-gap: 8px;
+  }
+
+  .nav__cta {
+    margin-left: auto;
+    order: 2;
+  }
+
+  .nav {
+    order: 3;
+    flex: 1 1 100%;
+    gap: 4px;
+    margin: 0 calc(-1 * var(--gutter));
+    padding: 0 var(--gutter) 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav::-webkit-scrollbar {
     display: none;
+  }
+
+  .nav a {
+    flex: none;
+    padding: 5px 10px;
+    border: 1px solid var(--line);
+    font-size: 0.9rem;
+    color: var(--ink);
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+  }
+
+  .nav a[aria-current="page"] {
+    border-color: var(--accent);
   }
 
   .timeline li {
@@ -2652,7 +2756,7 @@ body::before {
   gap: 10px;
 }
 
-.board__col h4 {
+.board__title {
   margin: 0 0 8px;
   font-size: 0.74rem;
   font-weight: 600;

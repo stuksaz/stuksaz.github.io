@@ -9,10 +9,15 @@ Spuštění z kořene repozitáře:
 
 Vytvoří/přepíše soubory <slug>.html v kořeni a obnoví blok
 „Další projekty“ v middleware.html (mezi značkami DALSI-PROJEKTY).
-Složky začínající podtržítkem GitHub Pages nezveřejňuje.
+Pak doplní datum poslední úpravy (patička, strukturovaná data a sitemap.xml).
+Datum se posune jen u stránky, které se změnil obsah v <main>; otisky drží
+_zdroj/aktualizace.json. Složky začínající podtržítkem GitHub Pages nezveřejňuje.
 """
 
+import hashlib
 import json
+import re
+from datetime import date
 from pathlib import Path
 
 KOREN = Path(__file__).resolve().parent.parent
@@ -167,9 +172,9 @@ VIZ_KUSKA = stage(
 VIZ_DUNDEE = f"""<div class="mock">
             <p class="mock__bar"><span class="vlog__dot" aria-hidden="true"></span>Administrace · poptávky</p>
             <div class="board">
-              <div class="board__col"><h4>Nové</h4><div class="board__card is-moving">Svatba<small>červen · 80 hostů</small></div><div class="board__card">Firemní večírek<small>prosinec</small></div></div>
-              <div class="board__col"><h4>V jednání</h4><div class="board__card">Narozeninová oslava<small>září · 40 hostů</small></div></div>
-              <div class="board__col"><h4>Potvrzeno</h4><div class="board__card">Svatba<small>srpen</small></div><div class="board__card">Večírek<small>listopad</small></div></div>
+              <div class="board__col"><p class="board__title">Nové</p><div class="board__card is-moving">Svatba<small>červen · 80 hostů</small></div><div class="board__card">Firemní večírek<small>prosinec</small></div></div>
+              <div class="board__col"><p class="board__title">V jednání</p><div class="board__card">Narozeninová oslava<small>září · 40 hostů</small></div></div>
+              <div class="board__col"><p class="board__title">Potvrzeno</p><div class="board__card">Svatba<small>srpen</small></div><div class="board__card">Večírek<small>listopad</small></div></div>
             </div>
           </div>
           <div class="mock">
@@ -663,7 +668,6 @@ PROJEKTY = [
 
 # ---------- šablona stránky ----------
 
-FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%230e1a26'/%3E%3Cpath d='M16 16 L24 10' stroke='%23e0492a' stroke-width='3' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23ffffff'/%3E%3C/svg%3E"
 
 
 def nw(text):
@@ -705,7 +709,7 @@ def render_modules(mods):
     for h, p, b in mods:
         items.append(
             "          <li class=\"cs-module\">\n"
-            f"            <h4>{h}</h4>\n"
+            f"            <h3>{h}</h3>\n"
             f"            <p>{p}</p>\n"
             f"            <p class=\"cs-benefit\">{b}</p>\n"
             "          </li>"
@@ -904,6 +908,8 @@ def render_page(p):
                     "description": p["desc"],
                     "inLanguage": "cs",
                     "isPartOf": {"@id": f"{WEB}/#web"},
+                    "datePublished": SPUSTENI,
+                    "dateModified": "__DATUM__",
                     "author": {
                         "@type": "Person",
                         "@id": f"{WEB}/#zdenek",
@@ -937,17 +943,21 @@ def render_page(p):
   <link rel="canonical" href="{WEB}/{p["slug"]}">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Zdeněk Štuksa">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta property="og:locale" content="cs_CZ">
   <meta property="og:url" content="{WEB}/{p["slug"]}">
   <meta property="og:title" content="{p["title"]} — Zdeněk Štuksa">
   <meta property="og:description" content="{p["desc"]}">
-  <meta property="og:image" content="{WEB}/assets/zdenek-stuksa.jpg">
+  <meta property="og:image" content="{WEB}/assets/og-zdenek-stuksa.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Zdeněk Štuksa – e-commerce, Shoptet a AI">
 
-  <link rel="icon" href="{FAVICON}">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
 {ld}
@@ -964,8 +974,8 @@ def render_page(p):
       </a>
       <nav class="nav" aria-label="Navigace projektu">
         {nav_anchors}
-        <a class="nav__cta" href="./#kontakt">Kontakt</a>
       </nav>
+      <a class="nav__cta" href="./#kontakt">Kontakt</a>
     </div>
   </header>
 
@@ -982,6 +992,7 @@ def render_page(p):
     <div class="wrap site-footer__inner">
       <span>© <span data-year>2026</span> Zdeněk Štuksa</span>
       <span><a href="./">Zpět na hlavní stránku</a></span>
+      <span>Aktualizováno <time datetime="__DATUM__" data-upraveno>__DATUM_CZ__</time></span>
       <button type="button" class="footer-link" data-consent-open hidden>Nastavení cookies</button>
     </div>
   </footer>
@@ -1005,9 +1016,70 @@ def obnov_middleware():
     soubor.write_text(pred + zacatek + "\n" + blok + "\n    " + konec + po, encoding="utf-8")
 
 
+# ---------- datum úpravy a mapa stránek ----------
+
+AKTUALIZACE = Path(__file__).parent / "aktualizace.json"
+SPUSTENI = "2026-11-19"  # den spuštění webu
+RUCNI = ["index.html", "middleware.html"]  # stránky psané ručně
+
+
+def otisk(html):
+    """Otisk obsahu stránky: jen <main>, takže datum v patičce ho nemění."""
+    m = re.search(r"<main\b.*?</main>", html, re.S)
+    return hashlib.sha256((m.group(0) if m else html).encode("utf-8")).hexdigest()[:16]
+
+
+def cesky(d):
+    rok, mesic, den = d.split("-")
+    return f"{int(den)}. {int(mesic)}. {rok}"
+
+
+def doplnit_datum(soubor, html, evidence):
+    o = otisk(html)
+    zaznam = evidence.get(soubor)
+    if not zaznam or zaznam["otisk"] != o:
+        zaznam = {"otisk": o, "datum": date.today().isoformat()}
+        evidence[soubor] = zaznam
+    d = zaznam["datum"]
+    html = html.replace("__DATUM_CZ__", cesky(d)).replace("__DATUM__", d)
+    html = re.sub(r'("dateModified": ")\d{4}-\d{2}-\d{2}(")', rf"\g<1>{d}\g<2>", html)
+    return re.sub(
+        r'<time datetime="[^"]*" data-upraveno>[^<]*</time>',
+        f'<time datetime="{d}" data-upraveno>{cesky(d)}</time>',
+        html,
+    )
+
+
+def zapis_sitemapu(evidence):
+    stranky = [("index.html", f"{WEB}/")] + [(s, f"{WEB}/{s}") for s, _ in PORADI]
+    radky = "\n".join(
+        f"  <url><loc>{u}</loc><lastmod>{evidence[s]['datum']}</lastmod></url>" for s, u in stranky
+    )
+    (KOREN / "sitemap.xml").write_text(
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{radky}\n</urlset>\n",
+        encoding="utf-8",
+    )
+
+
 if __name__ == "__main__":
+    evidence = json.loads(AKTUALIZACE.read_text(encoding="utf-8")) if AKTUALIZACE.exists() else {}
     for p in PROJEKTY:
-        (KOREN / p["slug"]).write_text(render_page(p), encoding="utf-8")
-        print("zapsáno", p["slug"])
+        html = doplnit_datum(p["slug"], render_page(p), evidence)
+        (KOREN / p["slug"]).write_text(html, encoding="utf-8")
+        print("zapsáno", p["slug"], evidence[p["slug"]]["datum"])
     obnov_middleware()
     print("obnoveno middleware.html")
+    for soubor in RUCNI:
+        cesta = KOREN / soubor
+        puvodni = cesta.read_text(encoding="utf-8")
+        html = doplnit_datum(soubor, puvodni, evidence)
+        if html != puvodni:
+            cesta.write_text(html, encoding="utf-8")
+        print("datum", soubor, evidence[soubor]["datum"])
+    AKTUALIZACE.write_text(
+        json.dumps(evidence, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    zapis_sitemapu(evidence)
+    print("zapsána sitemap.xml")
