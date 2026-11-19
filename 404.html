@@ -24,22 +24,105 @@
         <span class="brand__name">Zdeněk Štuksa</span>
       </a>
       <nav class="nav" aria-label="Hlavní navigace">
+        <a href="/#o-mne">O mně</a>
+        <a href="/#co-umim">Co umím</a>
         <a href="/#projekty">Projekty</a>
+        <a href="/middleware.html">Middleware</a>
         <a class="nav__cta" href="/#kontakt">Kontakt</a>
       </nav>
     </div>
   </header>
 
   <main id="obsah">
+    <section class="hero hero--dark nf-hero">
+      <canvas class="airflow" data-airflow aria-hidden="true"></canvas>
+      <div class="wrap hero__grid">
+        <div class="hero__text">
+          <p class="eyebrow">Chyba 404 · stránka nenalezena</p>
+          <h1>Tady uniká vzduch</h1>
+          <p class="tagline">Tahle stránka neexistuje, tlak spadl <em>na nulu</em>.</p>
+          <p class="lead">
+            Adresa se možná změnila, nebo je v ní překlep. Zkuste hlavní stránku
+            nebo některý z projektů níže. A kdybyste hledali něco konkrétního,
+            klidně mi napište.
+          </p>
+          <div class="actions">
+            <a class="btn btn--primary" href="/">Na hlavní stránku</a>
+            <a class="btn btn--ghost" href="/#kontakt">Napsat mi</a>
+          </div>
+        </div>
+
+        <figure class="dial nf-dial" aria-label="Manometr ukazuje nulu: stránka nenalezena">
+          <svg class="gauge gauge--empty" viewBox="0 0 240 240" role="img" aria-labelledby="nf-gauge-title">
+            <title id="nf-gauge-title">Tlak 0 bar: stránka nenalezena</title>
+            <path class="gauge__track" d="M 49.29 190.71 A 100 100 0 1 1 190.71 190.71"/>
+            <path class="gauge__value" d="M 49.29 190.71 A 100 100 0 1 1 190.71 190.71"/>
+            <g class="gauge__ticks">
+              <line class="tick tick--major" x1="63.4" y1="176.6" x2="54.9" y2="185.1"/>
+              <line class="tick" x1="47.5" y1="164.4" x2="41.6" y2="168.1"/>
+              <line class="tick" x1="39.2" y1="146.3" x2="32.5" y2="148.4"/>
+              <line class="tick" x1="35.3" y1="126.7" x2="28.3" y2="127.2"/>
+              <line class="tick tick--major" x1="41.0" y1="107.5" x2="29.1" y2="105.6"/>
+              <line class="tick" x1="41.5" y1="87.5" x2="35.0" y2="84.8"/>
+              <line class="tick" x1="51.2" y1="70.0" x2="45.6" y2="65.9"/>
+              <line class="tick" x1="64.8" y1="55.4" x2="60.3" y2="50.0"/>
+              <line class="tick tick--major" x1="83.7" y1="48.7" x2="78.2" y2="38.0"/>
+              <line class="tick" x1="100.2" y1="37.3" x2="98.5" y2="30.5"/>
+              <line class="tick" x1="120.0" y1="35.0" x2="120.0" y2="28.0"/>
+              <line class="tick" x1="139.8" y1="37.3" x2="141.5" y2="30.5"/>
+              <line class="tick tick--major" x1="156.3" y1="48.7" x2="161.8" y2="38.0"/>
+              <line class="tick" x1="175.2" y1="55.4" x2="179.7" y2="50.0"/>
+              <line class="tick" x1="188.8" y1="70.0" x2="194.4" y2="65.9"/>
+              <line class="tick" x1="198.5" y1="87.5" x2="205.0" y2="84.8"/>
+              <line class="tick tick--major" x1="199.0" y1="107.5" x2="210.9" y2="105.6"/>
+              <line class="tick" x1="204.7" y1="126.7" x2="211.7" y2="127.2"/>
+              <line class="tick" x1="200.8" y1="146.3" x2="207.5" y2="148.4"/>
+              <line class="tick" x1="192.5" y1="164.4" x2="198.4" y2="168.1"/>
+              <line class="tick tick--major" x1="176.6" y1="176.6" x2="185.1" y2="185.1"/>
+              <text class="tick-label" x="73.3" y="170.7">0</text>
+              <text class="tick-label" x="54.8" y="113.7">2</text>
+              <text class="tick-label" x="90.0" y="65.2">4</text>
+              <text class="tick-label" x="150.0" y="65.2">6</text>
+              <text class="tick-label" x="185.2" y="113.7">8</text>
+              <text class="tick-label" x="166.7" y="170.7">10</text>
+            </g>
+            <text class="gauge__bar" x="120" y="92">bar</text>
+            <g class="gauge__needle">
+              <line x1="120" y1="132" x2="120" y2="46"/>
+            </g>
+            <circle class="gauge__hub" cx="120" cy="120" r="8"/>
+            <circle class="gauge__hub-dot" cx="120" cy="120" r="3"/>
+            <text class="gauge__readout" x="120" y="176">404</text>
+            <text class="gauge__unit" x="120" y="194">nic tu není</text>
+          </svg>
+        </figure>
+      </div>
+    </section>
+
     <section class="section">
       <div class="wrap">
-        <p class="eyebrow">Chyba 404</p>
-        <h1>Tahle stránka tu není</h1>
-        <p class="lead">Adresa se možná změnila, nebo je v ní překlep. Zkuste hlavní stránku, odtud se dostanete ke všemu.</p>
-        <div class="actions">
-          <a class="btn btn--primary" href="/">Na hlavní stránku</a>
-          <a class="btn btn--ghost" href="/#projekty">Projekty</a>
-        </div>
+        <header class="section__head">
+          <p class="eyebrow">Kam dál</p>
+          <h2>Tady to žije</h2>
+        </header>
+        <nav class="pj-next" aria-label="Hlavní stránky">
+          <a href="/"><small>Úvod</small><strong>Kdo jsem a co dělám</strong></a>
+          <a href="/#kontakt"><small>Kontakt</small><strong>Napište mi</strong></a>
+        </nav>
+        <ul class="pj-all" aria-label="Všechny projekty">
+          <li><a href="/middleware.html">Middleware Ventilek</a></li>
+          <li><a href="/kompresory-vzduchotechnika.html">Kompresory-Vzduchotechnika.cz</a></li>
+          <li><a href="/zakaznicka-aplikace.html">Zákaznická aplikace</a></li>
+          <li><a href="/sablona-eshopu.html">Šablona e-shopu</a></li>
+          <li><a href="/newslettery.html">AI newslettery</a></li>
+          <li><a href="/parovani-katalogu.html">Párování katalogu</a></li>
+          <li><a href="/martin-kuska.html">Martin Kuška</a></li>
+          <li><a href="/dundee-agency.html">Dundee Agency</a></li>
+          <li><a href="/pro-jachting.html">Pro-jachting.cz</a></li>
+          <li><a href="/ucetni-kancelar.html">Účetní kancelář</a></li>
+          <li><a href="/kvit.html">Kvit</a></li>
+          <li><a href="/najedno.html">NaJedno</a></li>
+        </ul>
       </div>
     </section>
   </main>
@@ -47,6 +130,7 @@
   <footer class="site-footer">
     <div class="wrap site-footer__inner">
       <span>© <span data-year>2026</span> Zdeněk Štuksa</span>
+      <span><a href="/">Zpět na hlavní stránku</a></span>
       <button type="button" class="footer-link" data-consent-open hidden>Nastavení cookies</button>
     </div>
   </footer>

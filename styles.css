@@ -3157,3 +3157,89 @@ body::before {
     display: none;
   }
 }
+
+/* ---------- stránka 404: manometr spadne na nulu ---------- */
+
+.nf-hero {
+  min-height: min(78vh, 760px);
+  display: flex;
+  align-items: center;
+}
+
+.nf-hero > .wrap {
+  width: 100%;
+}
+
+.nf-dial {
+  width: min(100%, 360px);
+}
+
+.gauge--empty .gauge__needle {
+  transform: rotate(-135deg);
+  animation: needle-drop 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+}
+
+.gauge--empty .gauge__value {
+  stroke-dashoffset: 471.24;
+  animation: value-drain 2.6s cubic-bezier(0.4, 0, 0.2, 1) 0.3s both;
+}
+
+.gauge--empty .gauge__readout {
+  fill: var(--accent);
+}
+
+.gauge__bar {
+  fill: var(--muted);
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-anchor: middle;
+}
+
+@keyframes needle-drop {
+  0% {
+    transform: rotate(27deg);
+  }
+  18% {
+    transform: rotate(20deg);
+  }
+  58% {
+    transform: rotate(-135deg);
+  }
+  70% {
+    transform: rotate(-121deg);
+  }
+  82% {
+    transform: rotate(-135deg);
+  }
+  90% {
+    transform: rotate(-130deg);
+  }
+  100% {
+    transform: rotate(-135deg);
+  }
+}
+
+@keyframes value-drain {
+  0%,
+  18% {
+    stroke-dashoffset: 188.5;
+  }
+  58%,
+  100% {
+    stroke-dashoffset: 471.24;
+  }
+}
+
+@media (max-width: 860px) {
+  .nf-hero {
+    min-height: 0;
+  }
+
+  .nf-dial {
+    width: min(100%, 260px);
+    justify-self: start;
+  }
+}
