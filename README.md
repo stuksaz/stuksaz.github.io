@@ -59,7 +59,7 @@ tyto DNS záznamy:
 | CNAME | `www` | `stuksaz.github.io.` |
 
 Jiné A/AAAA záznamy pro `@` a `www` (třeba výchozí parkovací stránka registrátora)
-je potřeba smazat. Po rozšíření DNS (minuty až hodiny) v **Settings → Pages**
+je potřeba smazat. Záznamy **MX a TXT** (e-mail jsem@zdenekstuksa.cz) zůstávají. Po rozšíření DNS (minuty až hodiny) v **Settings → Pages**
 zaškrtnout **Enforce HTTPS**. Doménu je dobré ověřit i v nastavení účtu
 (**Settings → Pages → Verified domains**), aby ji nikdo jiný nemohl
 připojit ke svému webu.
@@ -70,5 +70,5 @@ Při změně domény je potřeba změnit všechna.
 
 ## Co ještě doplnit
 
-- **Osobní e-mail a telefon:** teď jsou v kontaktu firemní údaje.
+- **Telefon:** v kontaktu je firemní. E-mail je jsem@zdenekstuksa.cz (schránka u Wedosu).
 - **Reference:** krátká věta od spokojeného klienta nebo přítele.
