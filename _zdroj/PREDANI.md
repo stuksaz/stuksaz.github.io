@@ -28,6 +28,22 @@ JE veřejný, takže sem nepatří nic soukromého.
   (publikuje se z kopie bez hlavičky dokumentu: `index.html` jen s obsahem
   `<head>` a `<body>`, ostatní soubory přes `files`).
 
+## Web je spuštěný (19. 11. 2026, 15:40)
+
+- PR #1 sloučen na Zdeňkův pokyn „zveřejni web hned“, **otevřené otázky níže ale
+  zůstaly nezodpovězené** a web je zveřejněný s dosavadními texty.
+- GitHub Pages: vlastní doména `zdenekstuksa.cz`, certifikát vydán, **Enforce HTTPS zapnuto**.
+  `www` i `http` se přesměrují na `https://zdenekstuksa.cz/`.
+- Search Console: sitemapa odeslána, Google našel 13 stránek.
+- PR #2: nová stránka 404 (manometr spadne na nulu), čeká na Zdeňkovo sloučení.
+
+### Zbývá
+
+- Ověřit doménu v účtu GitHub (**Settings → Pages → Verified domains**, záznam TXT
+  `_github-pages-challenge-stuksaz` u Wedosu). Zdeněk musí být v Chromu přihlášený na github.com.
+- Zkušební e-mail na jsem@zdenekstuksa.cz z jiné adresy než Gmail.
+- Odpovědi na otevřené otázky a podle nich upravit texty.
+
 ## Hotovo 19. 11. odpoledne
 
 - **DNS u Wedosu nastavené** (A a AAAA na GitHub, `www` CNAME na `stuksaz.github.io.`).
