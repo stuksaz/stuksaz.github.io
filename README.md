@@ -15,6 +15,7 @@ Adresa: **https://zdenekstuksa.cz** (záložní: https://stuksaz.github.io)
 | `kompresory-vzduchotechnika.html`, `kvit.html` a další | Stránky projektů, **generované** z `_zdroj/projekty.py` |
 | `styles.css` | Vzhled. Barvy jsou proměnné nahoře v `:root`, tmavý režim hned pod |
 | `script.js` | Animace (proudění vzduchu, živý deník, odpočty, počítadla) a aktuální rok |
+| `404.html` | Stránka pro neexistující adresu (GitHub Pages ji použije sám) |
 | `assets/` | Fotka, snímky webů a aplikací (WebP) |
 
 ## Úprava stránek projektů
@@ -68,7 +69,17 @@ Adresa webu je ve stránkách na několika místech (`canonical`, `og:url`,
 obrázek pro sdílení, `sitemap.xml`, `robots.txt`, `WEB` v `_zdroj/projekty.py`).
 Při změně domény je potřeba změnit všechna.
 
+## Měření návštěvnosti a vyhledávače
+
+- **Google Analytics 4**, ID měření `G-2QMREX9VCJ` (konec `script.js`). Načte se
+  **až po souhlasu** v liště dole. Volba se pamatuje v prohlížeči, změnit ji jde
+  odkazem „Nastavení cookies“ v patičce. Po odmítnutí se cookies `_ga` smažou.
+  Kliknutí na e-mail nebo telefon se měří jako událost `generate_lead`.
+- **Google Search Console**: doména `zdenekstuksa.cz` ověřená záznamem TXT u Wedosu.
+- Každá stránka má `canonical`, Open Graph, strukturovaná data (hlavní stránka
+  `Person` a `WebSite`, ostatní `WebPage` a drobečkovou navigaci) a je v `sitemap.xml`.
+
 ## Co ještě doplnit
 
-- **Kontakt:** telefon +420 773 489 530, e-mail jsem@zdenekstuksa.cz (schránku je potřeba založit u Wedosu).
+- **Kontakt:** telefon +420 773 489 530, e-mail jsem@zdenekstuksa.cz (přeposílání pošty u Wedosu).
 - **Reference:** krátká věta od spokojeného klienta nebo přítele.

@@ -1,4 +1,4 @@
-# Předání práce na osobním webu (stav 19. 11. 2026)
+# Předání práce na osobním webu (stav 19. 11. 2026 odpoledne)
 
 Tento soubor je pro Clauda, který pokračuje v práci na webu Zdeňka Štuksy
 v nové konverzaci. Složka `_zdroj` se na webu nezveřejňuje, repozitář ale
@@ -27,6 +27,17 @@ JE veřejný, takže sem nepatří nic soukromého.
 - Náhled (soukromý artefakt): https://claude.ai/artifact/DKjysm94PuwPvePLMAantp
   (publikuje se z kopie bez hlavičky dokumentu: `index.html` jen s obsahem
   `<head>` a `<body>`, ostatní soubory přes `files`).
+
+## Hotovo 19. 11. odpoledne
+
+- **DNS u Wedosu nastavené** (A a AAAA na GitHub, `www` CNAME na `stuksaz.github.io.`).
+  Záznamy `*` (hvězdička) na parkovací stránku Wedosu zůstaly, Zdeněk je nechtěl mazat.
+- **Pošta:** u Wedosu zapnuté přeposílání `cokoliv@zdenekstuksa.cz` na Zdeňkův
+  osobní e-mail (MX `mxredir.wedos.net`). Odpovědi zatím chodí z jeho osobní adresy.
+- **Google Analytics 4:** služba „zdenekstuksa.cz – osobní web“, ID měření
+  `G-2QMREX9VCJ`, v kódu s lištou souhlasu (viz README).
+- **Search Console:** služba typu doména `zdenekstuksa.cz`, ověřovací TXT je u Wedosu.
+- SEO: strukturovaná data na všech stránkách, `og:site_name`, `twitter:card`, `404.html`.
 
 ## Co je potřeba udělat teď
 

@@ -257,3 +257,103 @@
     counters.forEach(function (el) { io.observe(el); });
   }
 })();
+
+// Měření návštěvnosti (Google Analytics 4), jen se souhlasem návštěvníka.
+// Bez souhlasu se nic nenačte a žádné cookies nevzniknou.
+(function () {
+  var GA_ID = "G-2QMREX9VCJ";
+  var KEY = "zs-souhlas-mereni";
+  var bar = null;
+
+  function read() {
+    try { return localStorage.getItem(KEY); } catch (e) { return null; }
+  }
+  function write(v) {
+    try { localStorage.setItem(KEY, v); } catch (e) { /* prohlížeč úložiště nepovolil */ }
+  }
+
+  function loadGA() {
+    if (window.__zsGa) return;
+    window.__zsGa = true;
+    window["ga-disable-" + GA_ID] = false;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag("consent", "default", {
+      analytics_storage: "granted",
+      ad_storage: "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied"
+    });
+    window.gtag("js", new Date());
+    window.gtag("config", GA_ID);
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + GA_ID;
+    document.head.appendChild(s);
+  }
+
+  function stopGA() {
+    window["ga-disable-" + GA_ID] = true;
+    if (window.gtag) window.gtag("consent", "update", { analytics_storage: "denied" });
+    // smazat cookies Google Analytics (_ga, _ga_…)
+    var host = location.hostname;
+    var domains = ["", host, "." + host, "." + host.replace(/^www\./, "")];
+    document.cookie.split(";").forEach(function (c) {
+      var name = c.split("=")[0].trim();
+      if (!/^_ga/.test(name)) return;
+      domains.forEach(function (d) {
+        document.cookie = name + "=; Max-Age=0; path=/" + (d ? "; domain=" + d : "");
+      });
+    });
+  }
+
+  function hide() {
+    if (bar) { bar.remove(); bar = null; }
+  }
+
+  function decide(v) {
+    write(v);
+    hide();
+    if (v === "ano") loadGA(); else stopGA();
+  }
+
+  function show() {
+    if (bar) return;
+    bar = document.createElement("div");
+    bar.className = "consent";
+    bar.setAttribute("role", "region");
+    bar.setAttribute("aria-label", "Souhlas s měřením návštěvnosti");
+    bar.innerHTML =
+      '<p class="consent__text">Rád bych věděl, kolik lidí web čte a co je zajímá. ' +
+      "S vaším souhlasem k tomu použiju Google Analytics, které ukládá cookies. " +
+      "Bez souhlasu se nic neměří.</p>" +
+      '<div class="consent__actions">' +
+      '<button type="button" class="btn btn--primary" data-consent="ano">Souhlasím</button>' +
+      '<button type="button" class="btn btn--ghost" data-consent="ne">Nesouhlasím</button>' +
+      "</div>";
+    bar.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-consent]");
+      if (b) decide(b.getAttribute("data-consent"));
+    });
+    document.body.appendChild(bar);
+  }
+
+  // odkaz v patičce: znovu otevře volbu
+  document.querySelectorAll("[data-consent-open]").forEach(function (el) {
+    el.hidden = false;
+    el.addEventListener("click", show);
+  });
+
+  // kliknutí na e-mail nebo telefon = poptávka (měří se jen se souhlasem)
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="mailto:"], a[href^="tel:"]');
+    if (!a || !window.__zsGa || !window.gtag) return;
+    window.gtag("event", "generate_lead", {
+      method: a.getAttribute("href").indexOf("tel:") === 0 ? "telefon" : "e-mail"
+    });
+  });
+
+  var stav = read();
+  if (stav === "ano") loadGA();
+  else if (stav !== "ne") show();
+})();

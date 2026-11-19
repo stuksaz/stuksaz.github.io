@@ -12,6 +12,7 @@ Vytvoří/přepíše soubory <slug>.html v kořeni a obnoví blok
 Složky začínající podtržítkem GitHub Pages nezveřejňuje.
 """
 
+import json
 from pathlib import Path
 
 KOREN = Path(__file__).resolve().parent.parent
@@ -890,6 +891,39 @@ def render_page(p):
         nav_anchors += '\n        <a href="#galerie">Snímky</a>'
     nav_anchors += '\n        <a href="./#projekty">Projekty</a>'
 
+    url = f"{WEB}/{p['slug']}"
+    ld = json.dumps(
+        {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "WebPage",
+                    "@id": url,
+                    "url": url,
+                    "name": f"{p['title']} — Zdeněk Štuksa",
+                    "description": p["desc"],
+                    "inLanguage": "cs",
+                    "isPartOf": {"@id": f"{WEB}/#web"},
+                    "author": {
+                        "@type": "Person",
+                        "@id": f"{WEB}/#zdenek",
+                        "name": "Zdeněk Štuksa",
+                        "url": f"{WEB}/",
+                    },
+                },
+                {
+                    "@type": "BreadcrumbList",
+                    "itemListElement": [
+                        {"@type": "ListItem", "position": 1, "name": "Zdeněk Štuksa", "item": f"{WEB}/"},
+                        {"@type": "ListItem", "position": 2, "name": p["title"], "item": url},
+                    ],
+                },
+            ],
+        },
+        ensure_ascii=False,
+        indent=2,
+    )
+
     return f"""<!doctype html>
 <html lang="cs">
 <head>
@@ -902,6 +936,8 @@ def render_page(p):
   <meta name="theme-color" content="#0a1118" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="{WEB}/{p["slug"]}">
   <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Zdeněk Štuksa">
+  <meta name="twitter:card" content="summary">
   <meta property="og:locale" content="cs_CZ">
   <meta property="og:url" content="{WEB}/{p["slug"]}">
   <meta property="og:title" content="{p["title"]} — Zdeněk Štuksa">
@@ -913,6 +949,9 @@ def render_page(p):
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+{ld}
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#obsah">Přeskočit na obsah</a>
@@ -943,6 +982,7 @@ def render_page(p):
     <div class="wrap site-footer__inner">
       <span>© <span data-year>2026</span> Zdeněk Štuksa</span>
       <span><a href="./">Zpět na hlavní stránku</a></span>
+      <button type="button" class="footer-link" data-consent-open hidden>Nastavení cookies</button>
     </div>
   </footer>
 
