@@ -15,7 +15,7 @@ Složky začínající podtržítkem GitHub Pages nezveřejňuje.
 from pathlib import Path
 
 KOREN = Path(__file__).resolve().parent.parent
-WEB = "https://stuksaz.github.io"
+WEB = "https://zdenekstuksa.cz"
 QR = (Path(__file__).parent / "qr-ilustrace.txt").read_text(encoding="utf-8")
 
 # pořadí = pořadí v navigaci „předchozí / další“

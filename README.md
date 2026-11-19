@@ -4,7 +4,7 @@ Osobní web: kdo jsem, co umím, co jsem postavil a jak mě kontaktovat.
 Hlavní stránka a ke každému projektu vlastní stránka.
 Čisté HTML, CSS a pár řádků JavaScriptu, bez závislostí.
 
-Adresa: **https://stuksaz.github.io**
+Adresa: **https://zdenekstuksa.cz** (záložní: https://stuksaz.github.io)
 
 ## Soubory
 
@@ -38,14 +38,35 @@ python3 -m http.server 8000
 # a otevřít http://localhost:8000
 ```
 
-## Zveřejnění (GitHub Pages)
+## Zveřejnění (GitHub Pages + vlastní doména)
 
-Repozitář se jmenuje `stuksaz.github.io`, takže GitHub web zveřejní na
-`https://stuksaz.github.io` z větve `main`. Kdyby se web po sloučení
-neobjevil: **Settings → Pages → Source: Deploy from a branch**, větev `main`,
-složka `/ (root)`, **Save**.
+Web zveřejňuje GitHub Pages z větve `main`, složka `/ (root)`
+(**Settings → Pages → Source: Deploy from a branch**).
 
-Vlastní doménu (třeba `stuksa.cz`) jde nastavit tamtéž v **Custom domain**.
+Doména **zdenekstuksa.cz** je v souboru `CNAME`. U registrátora domény musí být
+tyto DNS záznamy:
+
+| Typ | Název | Hodnota |
+| --- | --- | --- |
+| A | `@` (zdenekstuksa.cz) | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| AAAA | `@` | `2606:50c0:8000::153` |
+| AAAA | `@` | `2606:50c0:8001::153` |
+| AAAA | `@` | `2606:50c0:8002::153` |
+| AAAA | `@` | `2606:50c0:8003::153` |
+| CNAME | `www` | `stuksaz.github.io.` |
+
+Jiné A/AAAA záznamy pro `@` a `www` (třeba výchozí parkovací stránka registrátora)
+je potřeba smazat. Po rozšíření DNS (minuty až hodiny) v **Settings → Pages**
+zaškrtnout **Enforce HTTPS**. Doménu je dobré ověřit i v nastavení účtu
+(**Settings → Pages → Verified domains**), aby ji nikdo jiný nemohl
+připojit ke svému webu.
+
+Adresa webu je ve stránkách na několika místech (`canonical`, `og:url`,
+obrázek pro sdílení, `sitemap.xml`, `robots.txt`, `WEB` v `_zdroj/projekty.py`).
+Při změně domény je potřeba změnit všechna.
 
 ## Co ještě doplnit
 
