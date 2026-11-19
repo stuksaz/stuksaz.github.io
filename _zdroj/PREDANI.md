@@ -35,7 +35,22 @@ JE veřejný, takže sem nepatří nic soukromého.
 - GitHub Pages: vlastní doména `zdenekstuksa.cz`, certifikát vydán, **Enforce HTTPS zapnuto**.
   `www` i `http` se přesměrují na `https://zdenekstuksa.cz/`.
 - Search Console: sitemapa odeslána, Google našel 13 stránek.
-- PR #2: nová stránka 404 (manometr spadne na nulu), čeká na Zdeňkovo sloučení.
+- PR #2 (nová stránka 404) a PR #3 (kratší popisy) sloučené.
+
+## Kontrola SEO, GEO a UX (19. 11. večer)
+
+Zpráva s ukázkami: https://claude.ai/artifact/F6uBkzUpDEGvfJknbBhULs (soukromá, vidí ji Zdeněk).
+Úvod mobil PageSpeed 91/96/100/100 (LCP 3,2 s), počítač 99/96/100/100.
+Zdeněk schválil všechny úpravy, které jde udělat bez něj („Ano, všechny“). Větev
+`claude/vylepseni-auditu`: menu na mobilu (řádek odkazů pod hlavičkou), čitelnější
+oranžová (#c2381a, v tmavých pruzích #ff6b45), ikona webu jako soubory, obrázky
+pro sdílení 1200 × 630, písma uložená na webu, ProfilePage + Žebrák + datum úpravy,
+nadpisy h4 → h3, datum úpravy a sitemapa z generátoru. Google Analytics: uchování
+dat přepnuté na 14 měsíců (hotovo přímo v Analytics).
+
+Čeká na Zdeňka: Bing Webmaster Tools a Seznam Webmaster (jeho přihlášení), odkazy
+na web z LinkedInu, Facebooku a stránky O nás na e-shopu, rozhodnutí „skoro 20 let“
+vs. „od roku 2010“ (paměť říká od roku 2010 = 16 let).
 
 ### Zbývá
 

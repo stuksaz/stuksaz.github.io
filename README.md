@@ -16,7 +16,10 @@ Adresa: **https://zdenekstuksa.cz** (záložní: https://stuksaz.github.io)
 | `styles.css` | Vzhled. Barvy jsou proměnné nahoře v `:root`, tmavý režim hned pod |
 | `script.js` | Animace (proudění vzduchu, živý deník, odpočty, počítadla) a aktuální rok |
 | `404.html` | Stránka pro neexistující adresu (GitHub Pages ji použije sám) |
-| `assets/` | Fotka, snímky webů a aplikací (WebP) |
+| `assets/` | Fotka, snímky webů a aplikací (WebP), obrázky pro sdílení `og-*.jpg` (1200 × 630) |
+| `assets/fonts/` | Písma Inter a Space Grotesk (WOFF2, licence SIL OFL u souborů). Web je nenačítá z Googlu |
+| `favicon.ico`, `favicon.svg`, `apple-touch-icon.png` | Ikona webu (manometr) pro prohlížeč, Google a plochu iPhonu |
+| `sitemap.xml` | Mapa stránek, **generovaná** z `_zdroj/projekty.py` |
 
 ## Úprava stránek projektů
 
@@ -27,7 +30,10 @@ python3 _zdroj/projekty.py
 ```
 
 Skript přepíše všechny stránky projektů a obnoví blok „Další projekty“
-v `middleware.html`. Složku `_zdroj` GitHub Pages nezveřejňuje.
+v `middleware.html`. Pak doplní datum poslední úpravy do patičky, do strukturovaných
+dat a do `sitemap.xml`. Datum se posune jen u stránky, které se změnil obsah
+(otisky jsou v `_zdroj/aktualizace.json`). Po ruční úpravě `index.html` nebo
+`middleware.html` je proto dobré skript spustit taky. Složku `_zdroj` GitHub Pages nezveřejňuje.
 Stránky projektů neupravuj ručně, při dalším spuštění by se změny ztratily.
 
 ## Náhled na počítači
@@ -76,8 +82,10 @@ Při změně domény je potřeba změnit všechna.
   odkazem „Nastavení cookies“ v patičce. Po odmítnutí se cookies `_ga` smažou.
   Kliknutí na e-mail nebo telefon se měří jako událost `generate_lead`.
 - **Google Search Console**: doména `zdenekstuksa.cz` ověřená záznamem TXT u Wedosu.
+- Google Analytics drží data 14 měsíců (nastaveno 19. 11. 2026, výchozí jsou 2).
 - Každá stránka má `canonical`, Open Graph, strukturovaná data (hlavní stránka
-  `Person` a `WebSite`, ostatní `WebPage` a drobečkovou navigaci) a je v `sitemap.xml`.
+  `ProfilePage`, `Person` a `WebSite`, ostatní `WebPage` a drobečkovou navigaci),
+  datum úpravy a je v `sitemap.xml`.
 
 ## Co ještě doplnit
 
