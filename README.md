@@ -70,5 +70,5 @@ Při změně domény je potřeba změnit všechna.
 
 ## Co ještě doplnit
 
-- **Telefon:** v kontaktu je firemní. E-mail je jsem@zdenekstuksa.cz (schránka u Wedosu).
+- **Kontakt:** telefon +420 773 489 530, e-mail jsem@zdenekstuksa.cz (schránku je potřeba založit u Wedosu).
 - **Reference:** krátká věta od spokojeného klienta nebo přítele.
