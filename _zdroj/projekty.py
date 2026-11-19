@@ -435,7 +435,7 @@ PROJEKTY = [
     dict(
         slug="martin-kuska.html",
         title="Martin Kuška, obsahový specialista a spisovatel",
-        desc="Osobní web pro obsahového specialistu, autora románů z Křivoklátska, průvodce a lektora jízdy na kole: práce pro firmy na prvním místě, stránka a formulář pro každý obor, strukturovaná data a měření se souhlasem.",
+        desc="Web pro obsahového specialistu, autora románů z Křivoklátska a lektora jízdy na kole. Pro každý obor vlastní stránka a formulář, měření se souhlasem.",
         eyebrow="Web pro přítele · rozpracováno",
         h1="Martin Kuška",
         lead="Osobní web pro obsahového specialistu, který píše odborné texty a obsahové strategie pro firmy, romány z Křivoklátska, provází krajinou a učí jezdit na kole v terénu. Práce pro firmy je na prvním místě, ostatní obory mají každý vlastní stránku.",
