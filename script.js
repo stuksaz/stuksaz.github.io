@@ -7,6 +7,19 @@
     el.textContent = String(new Date().getFullYear());
   });
 
+  // Kolik let v e-commerce: počítá se od roku v data-let-od, aby číslo samo rostlo.
+  // Ve stránce je napsané číslo pro rok vydání, skript ho jen posune.
+  document.querySelectorAll("[data-let-od]").forEach(function (el) {
+    var roky = new Date().getFullYear() - parseInt(el.getAttribute("data-let-od"), 10);
+    if (!(roky > 0)) return;
+    el.textContent = String(roky);
+    var svg = el.closest("svg");
+    if (svg && roky <= 25) {
+      svg.style.setProperty("--angle", ((roky - 12.5) * 10.8).toFixed(1) + "deg");
+      svg.style.setProperty("--offset", (471.24 * (1 - roky / 25)).toFixed(2));
+    }
+  });
+
   // Proudnice „stlačeného vzduchu“ v tmavém úvodu
   function airflow(canvas) {
     var ctx = canvas.getContext("2d");
