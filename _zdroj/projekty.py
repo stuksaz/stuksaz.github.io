@@ -908,8 +908,8 @@ def render_page(p):
                     "description": p["desc"],
                     "inLanguage": "cs",
                     "isPartOf": {"@id": f"{WEB}/#web"},
-                    "datePublished": SPUSTENI,
-                    "dateModified": "__DATUM__",
+                    "datePublished": cas(SPUSTENI),
+                    "dateModified": "__CAS__",
                     "author": {
                         "@type": "Person",
                         "@id": f"{WEB}/#zdenek",
@@ -1034,6 +1034,18 @@ def cesky(d):
     return f"{int(den)}. {int(mesic)}. {rok}"
 
 
+def cas(d):
+    """Den jako plný čas s pražským pásmem: Google u dateModified/datePublished nebere samotné datum."""
+    rok, mesic, den = map(int, d.split("-"))
+
+    def posledni_nedele(m):
+        konec = date(rok, m, 31)
+        return 31 - (konec.weekday() + 1) % 7
+
+    leto = (3, posledni_nedele(3)) < (mesic, den) <= (10, posledni_nedele(10))
+    return f"{d}T00:00:00{'+02:00' if leto else '+01:00'}"
+
+
 def doplnit_datum(soubor, html, evidence):
     o = otisk(html)
     zaznam = evidence.get(soubor)
@@ -1041,8 +1053,13 @@ def doplnit_datum(soubor, html, evidence):
         zaznam = {"otisk": o, "datum": date.today().isoformat()}
         evidence[soubor] = zaznam
     d = zaznam["datum"]
-    html = html.replace("__DATUM_CZ__", cesky(d)).replace("__DATUM__", d)
-    html = re.sub(r'("dateModified": ")\d{4}-\d{2}-\d{2}(")', rf"\g<1>{d}\g<2>", html)
+    html = html.replace("__DATUM_CZ__", cesky(d)).replace("__DATUM__", d).replace("__CAS__", cas(d))
+    html = re.sub(r'("dateModified": ")[^"]*(")', rf"\g<1>{cas(d)}\g<2>", html)
+    html = re.sub(
+        r'("datePublished": ")(\d{4}-\d{2}-\d{2})(")',
+        lambda m: m.group(1) + cas(m.group(2)) + m.group(3),
+        html,
+    )
     return re.sub(
         r'<time datetime="[^"]*" data-upraveno>[^<]*</time>',
         f'<time datetime="{d}" data-upraveno>{cesky(d)}</time>',
