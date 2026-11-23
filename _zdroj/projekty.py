@@ -935,6 +935,7 @@ def render_page(p):
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="max-image-preview:large">
   <title>{p["title"]} — Zdeněk Štuksa</title>
   <meta name="description" content="{p["desc"]}">
   <meta name="color-scheme" content="light dark">
